@@ -380,8 +380,7 @@ function renderRef(){
   CATALOG.filter(g => GENERAL.has(g.cat) || !S.act || g.cat === S.act).forEach(g => {
     const det = h('details', {}, h('summary', {}, `${GENERAL.has(g.cat) ? 'عام · ' : ''}${g.cat.replace(/ \(.*/, '')} · ${g.items.length}`));
     g.items.forEach(it => det.append(h('button', {type:'button', class:'gear', style:'display:block;width:100%;text-align:left;direction:ltr;margin:4px 0', onclick:() => {
-      const el = $('#src'); el.value = el.value.replace(/\s*$/, '') + '
-' + it.id; el.dispatchEvent(new Event('input'));
+      const el = $('#src'); el.value = el.value.replace(/\s*$/, '') + '\n' + it.id; el.dispatchEvent(new Event('input'));
     }}, `${it.id}  ${it.t}  (${it.type === 'count' ? 'count' : 'safe/unsafe'})`)));
     root.append(det);
   });
