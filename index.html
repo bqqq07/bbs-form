@@ -284,6 +284,7 @@ function parseNote(text){
     i.corr = Math.min(i.unsafe, fb);
     i.pos = Math.min(i.safe, fb - i.corr);
     if (!i.text) i.text = autoText(BY_ID[i.id], i.pos, i.corr);
+    else if (i.corr > 0 && !/corrected/i.test(i.text)) i.text = i.text.replace(/[.\s]+$/, '') + '. Corrected on the spot.';
   }
   if (people != null && fb > people) errors.push(`fb ${fb} is more than people ${people}`);
   return {errors, warnings, items, area, people, fb, notes};
