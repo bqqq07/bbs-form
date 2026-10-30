@@ -8,44 +8,33 @@
 <style>
 :root{
   --bg:#f3f5f7; --card:#fff; --ink:#14202b; --mute:#64748b; --line:#e2e8f0;
-  --brand:#0f766e; --brand-ink:#fff; --warn:#b45309; --bad:#b91c1c; --ok:#15803d; --chip:#e6f4f1;
+  --brand:#0f766e; --brand-ink:#fff; --bad:#b91c1c; --ok:#15803d; --chip:#e6f4f1;
 }
 @media (prefers-color-scheme:dark){
-  :root{ --bg:#0e1419; --card:#18222b; --ink:#e8eef3; --mute:#93a4b4; --line:#2a3744; --brand:#2dd4bf; --brand-ink:#04211d; --warn:#fbbf24; --bad:#f87171; --ok:#4ade80; --chip:#143a36; }
+  :root{ --bg:#0e1419; --card:#18222b; --ink:#e8eef3; --mute:#93a4b4; --line:#2a3744; --brand:#2dd4bf; --brand-ink:#04211d; --bad:#f87171; --ok:#4ade80; --chip:#143a36; }
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html{background:var(--bg)}
-body{margin:0;font:16px/1.5 system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;color:var(--ink);background:var(--bg);padding:0 16px 120px;max-width:560px;margin-inline:auto}
+body{margin:0;font:16px/1.5 system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;color:var(--ink);background:var(--bg);padding:0 16px 130px;max-width:560px;margin-inline:auto}
 header{display:flex;align-items:center;justify-content:space-between;padding:18px 0 8px}
 h1{font-size:22px;margin:0}
 .sub{color:var(--mute);font-size:13px;margin:0 0 12px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin:12px 0}
 label.f{display:block;font-size:13px;color:var(--mute);margin:10px 0 4px}
-label.f:first-child{margin-top:0}
-select,input[type=text],input[type=password],input[type=number],textarea{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
-textarea{min-height:64px;resize:vertical}
-.row{display:flex;align-items:center;justify-content:space-between;gap:10px}
-.stepper{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--bg);direction:ltr}
-.stepper button{width:44px;height:42px;border:0;background:transparent;color:var(--ink);font-size:22px;cursor:pointer}
-.stepper button:active{background:var(--line)}
-.stepper span{min-width:44px;text-align:center;font-weight:600;font-variant-numeric:tabular-nums}
-details.grp{border-top:1px solid var(--line)}
-details.grp:first-of-type{border-top:0}
-details.grp>summary{list-style:none;cursor:pointer;padding:12px 2px;display:flex;justify-content:space-between;align-items:center;font-weight:600;direction:ltr;text-align:left}
-details.grp>summary::-webkit-details-marker{display:none}
-.badge{background:var(--chip);color:var(--brand);border-radius:999px;font-size:12px;padding:2px 9px;min-width:26px;text-align:center}
-.badge.zero{opacity:.35}
-.item{padding:8px 2px 12px;border-top:1px dashed var(--line);direction:ltr;text-align:left}
-.item:first-of-type{border-top:0}
-.item .top{display:flex;gap:10px;align-items:center}
-.item input[type=checkbox]{width:22px;height:22px;accent-color:var(--brand)}
-.item .id{color:var(--mute);font-size:13px;min-width:26px}
-.item .ctl{margin:8px 0 0 32px;display:flex;flex-direction:column;gap:8px;direction:rtl;text-align:right}
-.seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden}
-.seg button{border:0;background:transparent;color:var(--ink);padding:9px 16px;font:inherit;cursor:pointer}
-.seg button.on.safe{background:var(--ok);color:#fff}
-.seg button.on.unsafe{background:var(--bad);color:#fff}
-.hint{font-size:12px;color:var(--mute)}
+input[type=text],input[type=password],textarea{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+textarea{min-height:190px;resize:vertical;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:16px;line-height:1.6}
+.gear{background:none;border:1px solid var(--line);border-radius:10px;color:var(--ink);padding:8px 12px;font:inherit;cursor:pointer}
+.small{font-size:12px;color:var(--mute)}
+.pv{margin:0;padding:0;list-style:none}
+.pv li{padding:8px 0;border-top:1px dashed var(--line);direction:ltr;text-align:left;font-size:14px}
+.pv li:first-child{border-top:0}
+.pv .meta{color:var(--mute);font-size:13px}
+.tag{display:inline-block;border-radius:999px;padding:1px 9px;font-size:12px;margin-inline-end:6px;background:var(--chip);color:var(--brand)}
+.tag.u{background:color-mix(in srgb,var(--bad) 15%,transparent);color:var(--bad)}
+.errs{color:var(--bad);font-size:14px;margin:0;padding-inline-start:18px;direction:ltr;text-align:left}
+.head{font-weight:700;margin-bottom:6px}
+.toggle{display:flex;align-items:center;gap:10px;margin-top:12px}
+.toggle input{width:22px;height:22px;accent-color:var(--brand)}
 .bar{position:fixed;inset-inline:0;bottom:0;background:var(--card);border-top:1px solid var(--line);padding:10px 16px calc(10px + env(safe-area-inset-bottom));z-index:5}
 .bar .in{max-width:560px;margin-inline:auto}
 .sum{font-size:13px;color:var(--mute);margin-bottom:8px;display:flex;justify-content:space-between}
@@ -56,10 +45,8 @@ details.grp>summary::-webkit-details-marker{display:none}
 .status.ok{background:color-mix(in srgb,var(--ok) 15%,transparent);color:var(--ok)}
 .status.err{background:color-mix(in srgb,var(--bad) 15%,transparent);color:var(--bad)}
 .status a{color:inherit;font-weight:700}
-.toggle{display:flex;align-items:center;gap:10px}
-.toggle input{width:22px;height:22px;accent-color:var(--brand)}
-.gear{background:none;border:1px solid var(--line);border-radius:10px;color:var(--ink);padding:8px 12px;font:inherit;cursor:pointer}
-.small{font-size:12px;color:var(--mute)}
+details summary{cursor:pointer;color:var(--mute);font-size:13px}
+details pre{direction:ltr;text-align:left;font-size:12px;white-space:pre-wrap;color:var(--mute);margin:8px 0 0}
 </style>
 </head>
 <body>
@@ -67,7 +54,7 @@ details.grp>summary::-webkit-details-marker{display:none}
   <h1>BBS سريع</h1>
   <button class="gear" id="gear" type="button">إعدادات الربط</button>
 </header>
-<p class="sub">سجّل ما شاهدته فعلاً. الأداة تعبّي الموقع وتحفظ بدالك.</p>
+<p class="sub">اكتب ملاحظتك بسطور قصيرة، تتحول وتُرفع للموقع.</p>
 
 <section class="card" id="cfg" hidden>
   <label class="f" for="repo">الريبو (اسم المستخدم/اسم الريبو)</label>
@@ -81,20 +68,31 @@ details.grp>summary::-webkit-details-marker{display:none}
 </section>
 
 <section class="card">
-  <label class="f" for="area">المنطقة</label>
-  <select id="area" dir="ltr"></select>
-  <label class="f">عدد الأشخاص اللي راقبتهم</label>
-  <div class="row"><span class="hint">كل بند بعدّاد يُحسب على هذا العدد</span><div id="people"></div></div>
-  <label class="f">عدد اللي تكلمت معهم (فارغ = تلقائي)</label>
-  <div class="row"><span class="hint" id="fbHint"></span><div id="fb"></div></div>
+  <textarea id="src" dir="ltr" spellcheck="false" autocapitalize="off" autocorrect="off" placeholder="360&#10;4&#10;13&#10;23 3 1 two workers without lanyard&#10;16 safe"></textarea>
+  <details style="margin-top:10px">
+    <summary>طريقة الكتابة</summary>
+    <pre>line 1: area      360  (or Area 360)
+line 2: people    4
+then one line per item:
+  13              all safe (count item)
+  13 3 1          safe=3 unsafe=1
+  23 3 1 text     + feedback text
+  16 safe|unsafe  (radio item; default safe)
+  harness 3 1     keyword instead of id
+fb 3              people spoken to (default auto)
+notes: free text
+
+keywords: mask gloves ear shield pedestrian eyes
+clean ptw color cables light harness anchor net
+ladder 3pc lanyard grating access secured scaffold
+firewatch flammables hotarea extinguisher grinding pipe</pre>
+  </details>
 </section>
 
-<section class="card" id="items"></section>
+<section class="card" id="pv"></section>
 
 <section class="card">
-  <label class="f" for="notes">ملاحظات (اختياري)</label>
-  <textarea id="notes" dir="ltr" placeholder="Notes"></textarea>
-  <div class="toggle" style="margin-top:12px">
+  <div class="toggle">
     <input type="checkbox" id="dry">
     <label for="dry">تجربة: يعبّي الموقع بدون الحفظ النهائي</label>
   </div>
@@ -107,51 +105,122 @@ details.grp>summary::-webkit-details-marker{display:none}
 </div></div>
 
 <script>
-/* ===== البنود: عدّل هنا لو أضفت بنود جديدة. type: count = عدّاد Safe/Unsafe, radio = اختيار Safe/Unsafe ===== */
 const AREAS = ["Area 340","Area 350","Area 360","Area 370","Area 380","Area 422"];
+/* type: count = Safe/Unsafe counters, radio = Safe/Unsafe choice. k = keywords usable instead of the id */
 const CATALOG = [
  {cat:"PPE Specific (unsafe also if in bad conditions)", items:[
-  {id:9,  t:"Face mask", type:"count", p:"wore face masks where dust was present"},
-  {id:10, t:"Specific gloves", type:"count", p:"wore the specific gloves for the task"},
-  {id:11, t:"Ear protection", type:"count", p:"wore ear protection in the noisy area"},
-  {id:12, t:"Face shield", type:"count", p:"wore face shields as required"}]},
+  {id:9,  t:"Face mask", type:"count", k:["mask"], p:"wore face masks where dust was present"},
+  {id:10, t:"Specific gloves", type:"count", k:["gloves","glove"], p:"wore the specific gloves for the task"},
+  {id:11, t:"Ear protection", type:"count", k:["ear","earplug"], p:"wore ear protection in the noisy area"},
+  {id:12, t:"Face shield", type:"count", k:["shield"], p:"wore face shields as required"}]},
  {cat:"Safe practices and conditions", items:[
-  {id:13, t:"Pedestrian way", type:"count", p:"walked on the pedestrian path"},
-  {id:14, t:"Eyes on the job", type:"count", p:"kept their eyes on the job and stayed aware of their surroundings"},
-  {id:15, t:"Area cleaned and organized", type:"radio"},
-  {id:16, t:"Valid PTW", type:"radio"},
-  {id:17, t:"Tools color code", type:"radio"},
-  {id:18, t:"Electrical cables condition", type:"radio"},
-  {id:19, t:"Night shift illumination", type:"count", p:"worked in a properly illuminated area"}]},
+  {id:13, t:"Pedestrian way", type:"count", k:["pedestrian","walkway"], p:"walked on the pedestrian path"},
+  {id:14, t:"Eyes on the job", type:"count", k:["eyes"], p:"kept their eyes on the job and stayed aware of their surroundings"},
+  {id:15, t:"Area cleaned and organized", type:"radio", k:["clean","housekeeping"]},
+  {id:16, t:"Valid PTW", type:"radio", k:["ptw","permit"]},
+  {id:17, t:"Tools color code", type:"radio", k:["color","colour"]},
+  {id:18, t:"Electrical cables condition", type:"radio", k:["cables","cable"]},
+  {id:19, t:"Night shift illumination", type:"count", k:["light","illumination","night"], p:"worked in a properly illuminated area"}]},
  {cat:"Working at height", items:[
-  {id:23, t:"Full body harness", type:"count", p:"wore the full body harness properly"},
-  {id:24, t:"Anchorage point", type:"count", p:"were anchored at the designated anchorage point"},
-  {id:25, t:"Safety net", type:"radio"},
-  {id:26, t:"Ladders tagged and secured", type:"count", p:"used tagged and secured ladders"},
-  {id:27, t:"Ladder three points of contact", type:"count", p:"used the ladder with three points of contact"},
-  {id:28, t:"Tools lanyards", type:"count", p:"used tool lanyards"},
-  {id:29, t:"Gratings and roofs secured", type:"count", p:"sat or stood only on secured gratings"},
-  {id:30, t:"Access and egress tag", type:"radio"},
-  {id:31, t:"Tools secured from fall", type:"radio"},
-  {id:32, t:"Upper body within scaffold", type:"count", p:"kept their upper bodies within the scaffold"}]},
+  {id:23, t:"Full body harness", type:"count", k:["harness"], p:"wore the full body harness properly"},
+  {id:24, t:"Anchorage point", type:"count", k:["anchor","anchorage"], p:"were anchored at the designated anchorage point"},
+  {id:25, t:"Safety net", type:"radio", k:["net"]},
+  {id:26, t:"Ladders tagged and secured", type:"count", k:["ladder","ladders"], p:"used tagged and secured ladders"},
+  {id:27, t:"Ladder three points of contact", type:"count", k:["3pc","three"], p:"used the ladder with three points of contact"},
+  {id:28, t:"Tools lanyards", type:"count", k:["lanyard","lanyards"], p:"used tool lanyards"},
+  {id:29, t:"Gratings and roofs secured", type:"count", k:["grating","gratings"], p:"sat or stood only on secured gratings"},
+  {id:30, t:"Access and egress tag", type:"radio", k:["access","tag"]},
+  {id:31, t:"Tools secured from fall", type:"radio", k:["secured"]},
+  {id:32, t:"Upper body within scaffold", type:"count", k:["scaffold","upper"], p:"kept their upper bodies within the scaffold"}]},
  {cat:"Hot works", items:[
-  {id:61, t:"Fire watch", type:"radio"},
-  {id:62, t:"Area free from flammables", type:"radio"},
-  {id:63, t:"Hot work area secured", type:"radio"},
-  {id:64, t:"Fire extinguisher", type:"radio"},
-  {id:65, t:"Grinding piece secured", type:"radio"}]},
+  {id:61, t:"Fire watch", type:"radio", k:["firewatch","fire"]},
+  {id:62, t:"Area free from flammables", type:"radio", k:["flammables"]},
+  {id:63, t:"Hot work area secured", type:"radio", k:["hotarea"]},
+  {id:64, t:"Fire extinguisher", type:"radio", k:["extinguisher"]},
+  {id:65, t:"Grinding piece secured", type:"radio", k:["grinding"]}]},
  {cat:"Piping", items:[
-  {id:71, t:"Safe access during pipe installation", type:"count", p:"followed safe access during pipe installation"}]}
+  {id:71, t:"Safe access during pipe installation", type:"count", k:["pipe","piping"], p:"followed safe access during pipe installation"}]}
 ];
 
+/* PARSER */
+const BY_ID = {}, BY_KEY = {};
+for (const g of CATALOG) for (const it of g.items){
+  BY_ID[it.id] = {...it, cat:g.cat};
+  for (const k of it.k || []) BY_KEY[k] = it.id;
+}
+
+function autoText(it, pos, corr){
+  const base = it.p ? `Workers ${it.p}.` : `Observed ${it.t}.`;
+  if (corr === 0) return `${base} Appreciate was given.`;
+  if (pos === 0) return `${corr} worker did not comply with ${it.t}. Corrected on the spot.`;
+  return `${base} Appreciate was given, ${corr} corrected on the spot.`;
+}
+
+function parseNote(text){
+  const errors = [], items = [], seen = new Set();
+  let area = null, people = null, fb = null, notes = "";
+  const lines = text.split(/\r?\n/).map(l => l.trim()).filter(l => l && !l.startsWith('#'));
+  if (!lines.length) return {empty:true, errors, items};
+
+  const am = lines[0].match(/^(?:area\s*)?(\d{3})$/i);
+  if (am && AREAS.includes(`Area ${am[1]}`)) area = `Area ${am[1]}`;
+  else errors.push(`Line 1: unknown area "${lines[0]}" (${AREAS.map(a => a.slice(5)).join(', ')})`);
+
+  if (lines.length < 2 || !/^\d+$/.test(lines[1]) || +lines[1] < 1) errors.push('Line 2: people count must be a number >= 1');
+  else people = +lines[1];
+
+  for (const line of lines.slice(2)){
+    let m;
+    if ((m = line.match(/^fb\s+(\d+)$/i))){ fb = +m[1]; continue; }
+    if ((m = line.match(/^notes?\s*[:：]\s*(.*)$/i))){ notes = m[1]; continue; }
+    const tok = line.split(/\s+/), head = tok[0].toLowerCase();
+    const id = /^\d+$/.test(head) ? +head : BY_KEY[head];
+    const it = BY_ID[id];
+    if (!it){ errors.push(`"${line}": unknown item`); continue; }
+    if (seen.has(it.id)){ errors.push(`"${line}": item ${it.id} repeated`); continue; }
+    seen.add(it.id);
+    const rest = tok.slice(1);
+    if (it.type === 'radio'){
+      const v = (rest[0] || 'safe').toLowerCase();
+      if (/^(safe|s)$/.test(v)) items.push({id:it.id, cat:it.cat, t:it.t, type:'radio', value:'safe'});
+      else if (/^(unsafe|u)$/.test(v)) items.push({id:it.id, cat:it.cat, t:it.t, type:'radio', value:'unsafe'});
+      else errors.push(`"${line}": use safe or unsafe`);
+      continue;
+    }
+    if (people == null) continue;
+    let safe = people, unsafe = 0, txt = rest;
+    if (rest.length && /^\d+$/.test(rest[0])){
+      if (!/^\d+$/.test(rest[1] || '')){ errors.push(`"${line}": give both safe and unsafe numbers`); continue; }
+      safe = +rest[0]; unsafe = +rest[1]; txt = rest.slice(2);
+      if (safe + unsafe !== people){ errors.push(`"${line}": safe + unsafe must equal ${people}`); continue; }
+    }
+    items.push({id:it.id, cat:it.cat, t:it.t, type:'count', safe, unsafe, pos:0, corr:0, text:txt.join(' ')});
+  }
+  if (!items.length && !errors.length) errors.push('No items');
+  if (people != null && fb == null) fb = items.some(i => i.type === 'count') ? 1 : 0;
+  /* الموقع يطلب: أكبر (pos+corr) في أي بند = عدد من تكلمت معهم. الافتراضي شخص واحد */
+  for (const i of items.filter(i => i.type === 'count')){
+    i.corr = Math.min(i.unsafe, fb);
+    i.pos = Math.min(i.safe, fb - i.corr);
+    if (!i.text) i.text = autoText(BY_ID[i.id], i.pos, i.corr);
+  }
+  if (people != null && fb > people) errors.push(`fb ${fb} is more than people ${people}`);
+  return {errors, items, area, people, fb, notes};
+}
+
+function toPayload(r, dry){
+  return {dry_run:dry, area:r.area, people:r.people, feedbacked:r.fb, notes:r.notes,
+    items:r.items.map(({t, ...rest}) => rest)};
+}
+/* END PARSER */
+
+if (typeof document !== 'undefined') (function(){
 const $ = (s, r=document) => r.querySelector(s);
 function h(tag, props={}, ...kids){
   const e = document.createElement(tag);
   for (const [k,v] of Object.entries(props)){
     if (k === 'class') e.className = v;
-    else if (k.startsWith('on')) e.addEventListener(k.slice(2), v);
-    else if (v === true) e.setAttribute(k, '');
-    else if (v !== false && v != null) e.setAttribute(k, v);
+    else if (v != null && v !== false) e.setAttribute(k, v === true ? '' : v);
   }
   for (const k of kids.flat()) if (k != null) e.append(k.nodeType ? k : document.createTextNode(k));
   return e;
@@ -159,94 +228,33 @@ function h(tag, props={}, ...kids){
 const jget = (k, d) => { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; } };
 const jset = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} };
 
-const S = Object.assign({area:"Area 360", people:4, dry:true, fb:null, sel:{}}, jget('bbs_state', {}));
+const S = Object.assign({src:"", dry:true}, jget('bbs_text', {}));
 const C = Object.assign({repo:"", branch:"main", token:""}, jget('bbs_cfg', {}));
-const save = () => jset('bbs_state', {area:S.area, people:S.people, dry:S.dry, fb:S.fb, sel:S.sel});
 const todayKey = () => new Date().toLocaleDateString('en-CA');
 const sentToday = () => { const s = jget('bbs_sent', {}); return s.d === todayKey() ? s.n : 0; };
+const saveS = () => jset('bbs_text', S);
 
-function stepper(get, min, max, set){
-  const num = h('span', {}, String(get() ?? '—'));
-  const mk = (txt, d) => h('button', {type:'button', onclick:()=>{
-    const cur = get() ?? (d > 0 ? min - 1 : min);
-    const nv = Math.max(min, Math.min(max, cur + d));
-    set(nv); num.textContent = String(nv);
-  }}, txt);
-  const el = h('div', {class:'stepper'}, mk('−', -1), num, mk('+', +1));
-  el.refresh = () => num.textContent = String(get() ?? '—');
-  return el;
-}
-
-function autoText(it, safe, unsafe){
-  const base = it.p ? `Workers ${it.p}.` : `Observed ${it.t}.`;
-  if (unsafe === 0) return `${base} Positive feedback given.`;
-  if (safe === 0) return `${unsafe} workers did not comply with ${it.t}. Corrected on the spot.`;
-  return `${base} Positive feedback given to ${safe}, ${unsafe} corrected on the spot.`;
-}
-
-function computeFb(){
-  let m = 0;
-  for (const g of CATALOG) for (const it of g.items){
-    if (it.type === 'count' && S.sel[it.id]) m = Math.max(m, S.people);
-  }
-  return m;
-}
-
-function buildPayload(){
-  const N = S.people, items = [];
-  for (const g of CATALOG) for (const it of g.items){
-    const st = S.sel[it.id]; if (!st) continue;
-    if (it.type === 'count'){
-      const unsafe = Math.min(st.unsafe || 0, N), safe = N - unsafe;
-      items.push({id:it.id, cat:g.cat, type:'count', safe, unsafe, pos:safe, corr:unsafe, text:(st.text && st.text.trim()) || autoText(it, safe, unsafe)});
-    } else {
-      items.push({id:it.id, cat:g.cat, type:'radio', value: st.value || 'safe'});
+let R = null;
+function renderPreview(){
+  R = parseNote(S.src);
+  const root = $('#pv'); root.replaceChildren();
+  if (R.empty){
+    root.append(h('span', {class:'small'}, 'المعاينة تظهر هنا.'));
+  } else {
+    if (R.errors.length) root.append(h('div', {class:'head'}, 'تصحيح مطلوب'), h('ul', {class:'errs'}, R.errors.map(e => h('li', {}, e))));
+    if (R.area && R.people){
+      root.append(h('div', {class:'meta head', dir:'ltr', style:'text-align:left;margin-top:8px'}, `${R.area} · ${R.people} people · fb ${R.fb ?? '-'}`));
+      root.append(h('ul', {class:'pv'}, R.items.map(i => h('li', {},
+        h('div', {}, `${i.id} ${i.t}`),
+        i.type === 'count'
+          ? h('div', {class:'meta'}, h('span', {class:'tag'}, `safe ${i.safe}`), h('span', {class:'tag' + (i.unsafe ? ' u' : '')}, `unsafe ${i.unsafe}`), i.text)
+          : h('div', {}, h('span', {class:'tag' + (i.value === 'unsafe' ? ' u' : '')}, i.value))))));
     }
   }
-  return {dry_run:S.dry, area:S.area, people:N, feedbacked:(S.fb ?? computeFb()), notes:$('#notes').value.trim(), items};
-}
-
-function renderSummary(){
-  const k = Object.keys(S.sel).length;
-  $('#sumTxt').textContent = `${S.people} أشخاص · ${k} بند`;
+  const ok = !R.empty && !R.errors.length;
+  $('#sumTxt').textContent = ok ? `${R.people} أشخاص · ${R.items.length} بند` : '';
   $('#todayTxt').textContent = `أُرسل اليوم: ${sentToday()}`;
-  $('#fbHint').textContent = S.fb == null ? `تلقائي: ${computeFb()}` : 'يدوي';
-}
-
-function renderItems(){
-  const root = $('#items'); root.replaceChildren();
-  CATALOG.forEach((g, gi) => {
-    const selCount = g.items.filter(it => S.sel[it.id]).length;
-    const badge = h('span', {class:'badge' + (selCount ? '' : ' zero')}, String(selCount));
-    const det = h('details', {class:'grp'}, h('summary', {}, h('span', {}, g.cat), badge));
-    if (selCount) det.open = true;
-    g.items.forEach(it => {
-      const st = S.sel[it.id];
-      const cb = h('input', {type:'checkbox', ...(st ? {checked:true} : {}), onchange:(e)=>{
-        if (e.target.checked) S.sel[it.id] = it.type === 'count' ? {unsafe:0} : {value:'safe'};
-        else delete S.sel[it.id];
-        save(); renderItems(); renderSummary();
-      }});
-      const box = h('div', {class:'item'}, h('label', {class:'top'}, cb, h('span', {class:'id'}, String(it.id)), h('span', {}, it.t)));
-      if (st){
-        const ctl = h('div', {class:'ctl'});
-        if (it.type === 'count'){
-          const info = h('span', {class:'hint'});
-          const upd = () => info.textContent = `آمن: ${S.people - Math.min(st.unsafe||0, S.people)} · غير آمن: ${Math.min(st.unsafe||0, S.people)}`;
-          upd();
-          const stp = stepper(()=>st.unsafe||0, 0, 30, v=>{ st.unsafe = v; save(); upd(); });
-          const txt = h('input', {type:'text', dir:'ltr', placeholder:'نص الفيدباك (تلقائي إذا تركته فاضي)', value: st.text||'', oninput:(e)=>{ st.text = e.target.value; save(); }});
-          ctl.append(h('div', {class:'row'}, h('span', {}, 'غير آمن'), stp), info, txt);
-        } else {
-          const mkb = (val, label) => h('button', {type:'button', class:`${val}${(st.value||'safe')===val?' on':''}`, onclick:()=>{ st.value = val; save(); renderItems(); }}, label);
-          ctl.append(h('div', {class:'seg'}, mkb('safe','آمن'), mkb('unsafe','غير آمن')));
-        }
-        box.append(ctl);
-      }
-      det.append(box);
-    });
-    root.append(det);
-  });
+  $('#send').disabled = !ok;
 }
 
 function status(kind, html){
@@ -254,10 +262,9 @@ function status(kind, html){
 }
 
 async function send(){
-  const p = buildPayload();
+  if (!R || R.empty || R.errors.length) return;
   if (!C.repo || !C.token){ $('#cfg').hidden = false; return status('err', 'أكمل إعدادات الربط أولاً (الريبو والتوكن).'); }
-  if (!p.items.length) return status('err', 'اختر بند واحد على الأقل.');
-  if (p.people < 1) return status('err', 'عدد الأشخاص لازم يكون 1 أو أكثر.');
+  const p = toPayload(R, S.dry);
   if (!p.dry_run && sentToday() >= 2 && !confirm('أرسلت ملاحظتين اليوم. تبي ترسل مرة ثانية؟')) return;
   if (!p.dry_run && !confirm(`رفع نهائي للموقع؟\n${p.area} · ${p.people} أشخاص · ${p.items.length} بند`)) return;
   const btn = $('#send'); btn.disabled = true; btn.textContent = 'جاري الإرسال...';
@@ -270,7 +277,6 @@ async function send(){
     if (r.status === 204){
       if (!p.dry_run){ const s = jget('bbs_sent', {}); jset('bbs_sent', {d:todayKey(), n:(s.d===todayKey()?s.n:0)+1}); }
       status('ok', `تم الإرسال${p.dry_run ? ' (تجربة)' : ''}. التنفيذ ياخذ دقيقة تقريباً. <a href="https://github.com/${C.repo}/actions" target="_blank" rel="noopener">شوف النتيجة</a>`);
-      renderSummary();
     } else {
       const msg = {401:'التوكن غلط أو منتهي.', 403:'التوكن ما عنده صلاحية Actions: Read and write.', 404:'الريبو أو ملف submit.yml غير موجود، أو التوكن ما يشمل هذا الريبو.', 422:'الفرع غلط (غالباً main) أو الملف ما فيه workflow_dispatch.'}[r.status] || `خطأ ${r.status}`;
       status('err', msg);
@@ -278,19 +284,14 @@ async function send(){
   } catch (e){
     status('err', 'ما قدرت أوصل لـ GitHub. تأكد من الإنترنت.');
   } finally {
-    btn.disabled = false; btn.textContent = 'رفع للموقع';
+    btn.textContent = 'رفع للموقع'; renderPreview();
   }
 }
 
-/* ===== ربط الواجهة ===== */
-AREAS.forEach(a => $('#area').append(h('option', {value:a, ...(a===S.area?{selected:true}:{})}, a)));
-$('#area').addEventListener('change', e => { S.area = e.target.value; save(); });
-$('#people').append(stepper(()=>S.people, 1, 30, v=>{ S.people = v; for (const id in S.sel){ if (S.sel[id].unsafe > v) S.sel[id].unsafe = v; } save(); renderItems(); renderSummary(); }));
-const fbStep = stepper(()=>S.fb, 0, 30, v=>{ S.fb = v; save(); renderSummary(); });
-const fbReset = h('button', {type:'button', class:'gear', onclick:()=>{ S.fb = null; save(); fbStep.refresh(); renderSummary(); }}, 'تلقائي');
-$('#fb').append(h('div', {class:'row'}, fbReset, fbStep));
+$('#src').value = S.src;
+$('#src').addEventListener('input', e => { S.src = e.target.value; saveS(); renderPreview(); });
 $('#dry').checked = S.dry;
-$('#dry').addEventListener('change', e => { S.dry = e.target.checked; save(); });
+$('#dry').addEventListener('change', e => { S.dry = e.target.checked; saveS(); });
 $('#gear').addEventListener('click', () => { $('#cfg').hidden = !$('#cfg').hidden; });
 $('#repo').value = C.repo; $('#branch').value = C.branch; $('#token').value = C.token;
 $('#saveCfg').addEventListener('click', () => {
@@ -299,7 +300,8 @@ $('#saveCfg').addEventListener('click', () => {
 });
 $('#send').addEventListener('click', send);
 if (!C.repo || !C.token) $('#cfg').hidden = false;
-renderItems(); renderSummary();
+renderPreview();
+})();
 </script>
 </body>
 </html>
