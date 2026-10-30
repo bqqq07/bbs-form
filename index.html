@@ -89,6 +89,11 @@ firewatch flammables hotarea extinguisher grinding pipe</pre>
   </details>
 </section>
 
+<section class="card">
+  <div class="head">البنود حسب القسم (اضغط البند لإضافته)</div>
+  <div id="ref"></div>
+</section>
+
 <section class="card" id="pv"></section>
 
 <section class="card">
@@ -105,12 +110,19 @@ firewatch flammables hotarea extinguisher grinding pipe</pre>
 </div></div>
 
 <script>
-const AREAS = ["Area 340","Area 350","Area 360","Area 370","Area 380","Area 422"];
-/* type: count = Safe/Unsafe counters, radio = Safe/Unsafe choice. k = keywords usable instead of the id */
+const AREA_KEYS = {"340":"Area 340","350":"Area 350","360":"Area 360","370":"Area 370","380":"Area 380 SS","422":"Area U422","u422":"Area U422","laydown":"Area Laydown","tcf":"Area TCF"};
+/* type: count = Safe/Unsafe counters, radio = Safe/Unsafe choice. k = keywords usable instead of the id.
+   الأقسام والبنود مقروءة من الموقع الحقيقي (WPKG 2). البنود 1-3 (IMPORTANT REMINDERS) تذكيرات وليست ملاحظات */
 const CATALOG = [
+ {cat:"PPE Mandatory (unsafe also if in bad conditions)", items:[
+  {id:4, t:"Helmet", type:"count", k:["helmet"], p:"wore the helmet properly"},
+  {id:5, t:"Safety glasses", type:"count", k:["glasses"], p:"wore safety glasses"},
+  {id:6, t:"Hi-vis vest and working clothes", type:"count", k:["vest"], p:"wore the high visibility vest and proper working clothes"},
+  {id:7, t:"Safety gloves", type:"count", p:"wore safety gloves"},
+  {id:8, t:"Safety shoes", type:"count", k:["shoes"], p:"wore safety shoes"}]},
  {cat:"PPE Specific (unsafe also if in bad conditions)", items:[
   {id:9,  t:"Face mask", type:"count", k:["mask"], p:"wore face masks where dust was present"},
-  {id:10, t:"Specific gloves", type:"count", k:["gloves","glove"], p:"wore the specific gloves for the task"},
+  {id:10, t:"Specific gloves (hot works/chemicals)", type:"count", k:["gloves","glove"], p:"wore the specific gloves for the task"},
   {id:11, t:"Ear protection", type:"count", k:["ear","earplug"], p:"wore ear protection in the noisy area"},
   {id:12, t:"Face shield", type:"count", k:["shield"], p:"wore face shields as required"}]},
  {cat:"Safe practices and conditions", items:[
@@ -121,6 +133,10 @@ const CATALOG = [
   {id:17, t:"Tools color code", type:"radio", k:["color","colour"]},
   {id:18, t:"Electrical cables condition", type:"radio", k:["cables","cable"]},
   {id:19, t:"Night shift illumination", type:"count", k:["light","illumination","night"], p:"worked in a properly illuminated area"}]},
+ {cat:"Hand Tools and Power Tools", items:[
+  {id:20, t:"Unmodified tools", type:"count", p:"used unmodified tools and power tools"},
+  {id:21, t:"Handles power tools properly", type:"count", p:"handled the power tools in a proper way"},
+  {id:22, t:"Hands away from moving parts", type:"count", p:"kept hands and body parts away from the moving parts of tools"}]},
  {cat:"Working at height", items:[
   {id:23, t:"Full body harness", type:"count", k:["harness"], p:"wore the full body harness properly"},
   {id:24, t:"Anchorage point", type:"count", k:["anchor","anchorage"], p:"were anchored at the designated anchorage point"},
@@ -132,14 +148,74 @@ const CATALOG = [
   {id:30, t:"Access and egress tag", type:"radio", k:["access","tag"]},
   {id:31, t:"Tools secured from fall", type:"radio", k:["secured"]},
   {id:32, t:"Upper body within scaffold", type:"count", k:["scaffold","upper"], p:"kept their upper bodies within the scaffold"}]},
+ {cat:"Grating", items:[
+  {id:33, t:"Working area demarcated", type:"radio"},
+  {id:34, t:"Grating aligned before use", type:"radio"},
+  {id:35, t:"Temporary covers present", type:"radio"},
+  {id:36, t:"Stands only on secured grating", type:"count", p:"stood or worked only on secured gratings"}]},
+ {cat:"Manual lifting / transportation / Pipe Handling", items:[
+  {id:37, t:"Hands away from pinch points", type:"count", p:"kept hands and body parts away from pinch points during manual lifting"},
+  {id:38, t:"Lifts bending knees", type:"count", p:"lifted loads manually bending their knees"},
+  {id:39, t:"Assesses the load", type:"count", p:"assessed the load before moving it"},
+  {id:40, t:"Heavy/bulky loads handled by team", type:"radio"}]},
+ {cat:"Manual Wheeled transportation (wheelbarrows, trolleys, pallet trucks, etc.)", items:[
+  {id:41, t:"Load transported safely", type:"radio"},
+  {id:42, t:"Equipment in good condition", type:"radio"},
+  {id:43, t:"Load balanced and secured", type:"radio"},
+  {id:44, t:"Ground flat and free", type:"radio"},
+  {id:45, t:"Enough personnel involved", type:"radio"},
+  {id:46, t:"Supervisor eyes on activity", type:"count", p:"were supervised with eyes on the activity"}]},
+ {cat:"Driving Trucks and Heavy Equipment", items:[
+  {id:47, t:"Driver follows flagman", type:"radio"},
+  {id:48, t:"Seat belt", type:"count", k:["seatbelt"], p:"wore seat belts while driving"},
+  {id:49, t:"Speed limits", type:"count", k:["speed"], p:"respected speed limits"},
+  {id:50, t:"Both hands on steering wheel", type:"count", p:"kept both hands on the steering wheel"},
+  {id:51, t:"Slows/stops near pedestrians", type:"count", p:"slowed down or stopped when pedestrians were near"},
+  {id:52, t:"Area segregated", type:"radio"},
+  {id:53, t:"Trucks operate safely", type:"radio"}]},
+ {cat:"Mechanical Lifting", items:[
+  {id:54, t:"Area below load free", type:"radio"},
+  {id:55, t:"Crane/forklift safe distance", type:"radio"},
+  {id:56, t:"Load secured and balanced", type:"radio"},
+  {id:57, t:"Crane working area", type:"radio"},
+  {id:58, t:"Tagline present", type:"radio"},
+  {id:59, t:"Operator, rigger and crew see each other", type:"radio"},
+  {id:60, t:"Crane full-extended outriggers", type:"radio"}]},
  {cat:"Hot works", items:[
   {id:61, t:"Fire watch", type:"radio", k:["firewatch","fire"]},
   {id:62, t:"Area free from flammables", type:"radio", k:["flammables"]},
   {id:63, t:"Hot work area secured", type:"radio", k:["hotarea"]},
   {id:64, t:"Fire extinguisher", type:"radio", k:["extinguisher"]},
   {id:65, t:"Grinding piece secured", type:"radio", k:["grinding"]}]},
+ {cat:"Confined Space", items:[
+  {id:66, t:"Rescue devices available", type:"count", p:"worked with rescue devices available"},
+  {id:67, t:"Ventilation", type:"count", k:["ventilation"], p:"worked with natural or artificial ventilation"},
+  {id:68, t:"Badges collected", type:"radio"},
+  {id:69, t:"Stand by man present", type:"radio"},
+  {id:70, t:"AGT and gas test", type:"radio"}]},
  {cat:"Piping", items:[
-  {id:71, t:"Safe access during pipe installation", type:"count", k:["pipe","piping"], p:"followed safe access during pipe installation"}]}
+  {id:71, t:"Safe access during pipe installation", type:"count", k:["pipe","piping"], p:"followed safe access during pipe installation"},
+  {id:72, t:"Barricaded area free", type:"radio"},
+  {id:73, t:"Pressure gauges monitored", type:"radio"},
+  {id:74, t:"Hydro/pneumatic test area", type:"radio"}]},
+ {cat:"Excavation", items:[
+  {id:75, t:"Carries material safely", type:"count", p:"carried the material and equipment safely at the excavation"},
+  {id:76, t:"Area around excavation", type:"radio"},
+  {id:77, t:"Walls sloped or protected", type:"radio"},
+  {id:78, t:"Access and egress", type:"radio"},
+  {id:79, t:"Soil/material/equipment away from edge", type:"radio"}]},
+ {cat:"Electrical & Instrumentation", items:[
+  {id:80, t:"Termination only if cables secured", type:"count", p:"started termination only after the cables were secured"},
+  {id:81, t:"Pulls cables with both hands", type:"count", p:"pulled the cables with both hands"},
+  {id:82, t:"Termination and testing", type:"radio"},
+  {id:83, t:"Cables pulled using two hands", type:"radio"},
+  {id:84, t:"Cable pulling path clear", type:"radio"}]},
+ {cat:"Welfare Facility", items:[
+  {id:85, t:"Heat stress flag system", type:"radio"},
+  {id:86, t:"Glasses or water bottle", type:"count", p:"had glasses or a water bottle available"},
+  {id:87, t:"Igloo with drinking water", type:"radio"},
+  {id:88, t:"Temperature monitoring", type:"radio"},
+  {id:89, t:"Toilet and rest shelter", type:"radio"}]}
 ];
 
 /* PARSER */
@@ -162,9 +238,8 @@ function parseNote(text){
   const lines = text.split(/\r?\n/).map(l => l.trim()).filter(l => l && !l.startsWith('#'));
   if (!lines.length) return {empty:true, errors, items};
 
-  const am = lines[0].match(/^(?:area\s*)?(\d{3})$/i);
-  if (am && AREAS.includes(`Area ${am[1]}`)) area = `Area ${am[1]}`;
-  else errors.push(`Line 1: unknown area "${lines[0]}" (${AREAS.map(a => a.slice(5)).join(', ')})`);
+  area = AREA_KEYS[lines[0].toLowerCase().replace(/^area\s*/, '').replace(/\s*ss$/, '')] || null;
+  if (!area) errors.push(`Line 1: unknown area "${lines[0]}" (${Object.keys(AREA_KEYS).join(', ')})`);
 
   if (lines.length < 2 || !/^\d+$/.test(lines[1]) || +lines[1] < 1) errors.push('Line 2: people count must be a number >= 1');
   else people = +lines[1];
@@ -288,6 +363,17 @@ async function send(){
   }
 }
 
+function renderRef(){
+  const root = $('#ref');
+  CATALOG.forEach(g => {
+    const det = h('details', {}, h('summary', {}, `${g.cat.replace(/ \(.*/, '')} · ${g.items.length}`));
+    g.items.forEach(it => det.append(h('button', {type:'button', class:'gear', style:'display:block;width:100%;text-align:left;direction:ltr;margin:4px 0', onclick:() => {
+      const el = $('#src'); el.value = el.value.replace(/\s*$/, '') + '\n' + it.id; el.dispatchEvent(new Event('input'));
+    }}, `${it.id}  ${it.t}  (${it.type === 'count' ? 'count' : 'safe/unsafe'})`)));
+    root.append(det);
+  });
+}
+renderRef();
 $('#src').value = S.src;
 $('#src').addEventListener('input', e => { S.src = e.target.value; saveS(); renderPreview(); });
 $('#dry').checked = S.dry;
