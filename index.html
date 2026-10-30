@@ -230,7 +230,7 @@ const GENERAL = new Set(["PPE Mandatory (unsafe also if in bad conditions)", "PP
 
 function autoText(it, pos, corr){
   const base = it.p ? `Workers ${it.p}.` : `Observed ${it.t}.`;
-  if (corr === 0) return `${base} Appreciate was given.`;
+  if (corr === 0) return 'Appreciate was given.';
   if (pos === 0) return `${corr} worker did not comply with ${it.t}. Corrected on the spot.`;
   return `${base} Appreciate was given, ${corr} corrected on the spot.`;
 }
