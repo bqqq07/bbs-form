@@ -68,7 +68,7 @@ details pre{direction:ltr;text-align:left;font-size:12px;white-space:pre-wrap;co
 </section>
 
 <section class="card">
-  <textarea id="src" dir="ltr" spellcheck="false" autocapitalize="off" autocorrect="off" placeholder="360&#10;4&#10;13&#10;23 3 1 two workers without lanyard&#10;16 safe"></textarea>
+  <textarea id="src" dir="ltr" spellcheck="false" autocapitalize="off" autocorrect="off" placeholder="360&#10;4&#10;helmet&#10;23 3 1 one worker harness loose&#10;24"></textarea>
   <details style="margin-top:10px">
     <summary>طريقة الكتابة</summary>
     <pre>line 1: area      360  (or Area 360)
@@ -90,7 +90,7 @@ firewatch flammables hotarea extinguisher grinding pipe</pre>
 </section>
 
 <section class="card">
-  <div class="head">البنود حسب القسم (اضغط البند لإضافته)</div>
+  <div class="head">البنود: العام + نشاط واحد (اضغط البند لإضافته)</div>
   <div id="ref"></div>
 </section>
 
@@ -136,7 +136,7 @@ const CATALOG = [
  {cat:"Hand Tools and Power Tools", items:[
   {id:20, t:"Unmodified tools", type:"count", p:"used unmodified tools and power tools"},
   {id:21, t:"Handles power tools properly", type:"count", p:"handled the power tools in a proper way"},
-  {id:22, t:"Hands away from moving parts", type:"count", p:"kept hands and body parts away from the moving parts of tools"}]},
+  {id:22, t:"Hands away from moving parts", type:"count", p:"kept hands and body parts away from the line of fire"}]},
  {cat:"Working at height", items:[
   {id:23, t:"Full body harness", type:"count", k:["harness"], p:"wore the full body harness properly"},
   {id:24, t:"Anchorage point", type:"count", k:["anchor","anchorage"], p:"were anchored at the designated anchorage point"},
@@ -154,7 +154,7 @@ const CATALOG = [
   {id:35, t:"Temporary covers present", type:"radio"},
   {id:36, t:"Stands only on secured grating", type:"count", p:"stood or worked only on secured gratings"}]},
  {cat:"Manual lifting / transportation / Pipe Handling", items:[
-  {id:37, t:"Hands away from pinch points", type:"count", p:"kept hands and body parts away from pinch points during manual lifting"},
+  {id:37, t:"Hands away from pinch points", type:"count", p:"kept hands and body parts away from crushing points"},
   {id:38, t:"Lifts bending knees", type:"count", p:"lifted loads manually bending their knees"},
   {id:39, t:"Assesses the load", type:"count", p:"assessed the load before moving it"},
   {id:40, t:"Heavy/bulky loads handled by team", type:"radio"}]},
@@ -164,12 +164,12 @@ const CATALOG = [
   {id:43, t:"Load balanced and secured", type:"radio"},
   {id:44, t:"Ground flat and free", type:"radio"},
   {id:45, t:"Enough personnel involved", type:"radio"},
-  {id:46, t:"Supervisor eyes on activity", type:"count", p:"were supervised with eyes on the activity"}]},
+  {id:46, t:"Supervisor eyes on activity", type:"count", p:"were supervised, with the supervisor keeping eyes on the activity"}]},
  {cat:"Driving Trucks and Heavy Equipment", items:[
   {id:47, t:"Driver follows flagman", type:"radio"},
   {id:48, t:"Seat belt", type:"count", k:["seatbelt"], p:"wore seat belts while driving"},
   {id:49, t:"Speed limits", type:"count", k:["speed"], p:"respected speed limits"},
-  {id:50, t:"Both hands on steering wheel", type:"count", p:"kept both hands on the steering wheel"},
+  {id:50, t:"Both hands on steering wheel", type:"count", p:"kept both hands on the steering wheel and eyes on the road"},
   {id:51, t:"Slows/stops near pedestrians", type:"count", p:"slowed down or stopped when pedestrians were near"},
   {id:52, t:"Area segregated", type:"radio"},
   {id:53, t:"Trucks operate safely", type:"radio"}]},
@@ -199,14 +199,14 @@ const CATALOG = [
   {id:73, t:"Pressure gauges monitored", type:"radio"},
   {id:74, t:"Hydro/pneumatic test area", type:"radio"}]},
  {cat:"Excavation", items:[
-  {id:75, t:"Carries material safely", type:"count", p:"carried the material and equipment safely at the excavation"},
+  {id:75, t:"Carries material safely", type:"count", p:"carried the material and equipment inside the excavation using a safe access"},
   {id:76, t:"Area around excavation", type:"radio"},
   {id:77, t:"Walls sloped or protected", type:"radio"},
   {id:78, t:"Access and egress", type:"radio"},
   {id:79, t:"Soil/material/equipment away from edge", type:"radio"}]},
  {cat:"Electrical & Instrumentation", items:[
-  {id:80, t:"Termination only if cables secured", type:"count", p:"started termination only after the cables were secured"},
-  {id:81, t:"Pulls cables with both hands", type:"count", p:"pulled the cables with both hands"},
+  {id:80, t:"Termination only if de-energized", type:"count", p:"started termination only after confirming the cables were de-energized"},
+  {id:81, t:"Pulls cables with both hands", type:"count", p:"pulled the cables with both hands or mechanical aids"},
   {id:82, t:"Termination and testing", type:"radio"},
   {id:83, t:"Cables pulled using two hands", type:"radio"},
   {id:84, t:"Cable pulling path clear", type:"radio"}]},
@@ -225,6 +225,9 @@ for (const g of CATALOG) for (const it of g.items){
   for (const k of it.k || []) BY_KEY[k] = it.id;
 }
 
+/* أقسام عامة تنطبق على أي عمل؛ باقي الأقسام خاصة بنشاط واحد (مثلاً الهارنس فقط مع Working at height) */
+const GENERAL = new Set(["PPE Mandatory (unsafe also if in bad conditions)", "PPE Specific (unsafe also if in bad conditions)", "Safe practices and conditions"]);
+
 function autoText(it, pos, corr){
   const base = it.p ? `Workers ${it.p}.` : `Observed ${it.t}.`;
   if (corr === 0) return `${base} Appreciate was given.`;
@@ -233,7 +236,7 @@ function autoText(it, pos, corr){
 }
 
 function parseNote(text){
-  const errors = [], items = [], seen = new Set();
+  const errors = [], warnings = [], items = [], seen = new Set();
   let area = null, people = null, fb = null, notes = "";
   const lines = text.split(/\r?\n/).map(l => l.trim()).filter(l => l && !l.startsWith('#'));
   if (!lines.length) return {empty:true, errors, items};
@@ -272,6 +275,9 @@ function parseNote(text){
     items.push({id:it.id, cat:it.cat, t:it.t, type:'count', safe, unsafe, pos:0, corr:0, text:txt.join(' ')});
   }
   if (!items.length && !errors.length) errors.push('No items');
+  const acts = [...new Set(items.filter(i => !GENERAL.has(i.cat)).map(i => i.cat.replace(/ \(.*/, '')))];
+  if (items.some(i => i.id === 13) && acts.length) warnings.push(`13 (pedestrian way) is walking, it does not go with: ${acts.join(', ')}`);
+  if (acts.length > 1) warnings.push(`Different activities in one note: ${acts.join(' + ')}. Usually one activity per observation`);
   if (people != null && fb == null) fb = items.some(i => i.type === 'count') ? 1 : 0;
   /* الموقع يطلب: أكبر (pos+corr) في أي بند = عدد من تكلمت معهم. الافتراضي شخص واحد */
   for (const i of items.filter(i => i.type === 'count')){
@@ -280,7 +286,7 @@ function parseNote(text){
     if (!i.text) i.text = autoText(BY_ID[i.id], i.pos, i.corr);
   }
   if (people != null && fb > people) errors.push(`fb ${fb} is more than people ${people}`);
-  return {errors, items, area, people, fb, notes};
+  return {errors, warnings, items, area, people, fb, notes};
 }
 
 function toPayload(r, dry){
@@ -316,6 +322,7 @@ function renderPreview(){
   if (R.empty){
     root.append(h('span', {class:'small'}, 'المعاينة تظهر هنا.'));
   } else {
+    if (R.warnings && R.warnings.length) root.append(h('div', {class:'head', style:'color:#b45309'}, 'تنبيه'), h('ul', {class:'errs', style:'color:#b45309'}, R.warnings.map(e => h('li', {}, e))));
     if (R.errors.length) root.append(h('div', {class:'head'}, 'تصحيح مطلوب'), h('ul', {class:'errs'}, R.errors.map(e => h('li', {}, e))));
     if (R.area && R.people){
       root.append(h('div', {class:'meta head', dir:'ltr', style:'text-align:left;margin-top:8px'}, `${R.area} · ${R.people} people · fb ${R.fb ?? '-'}`));
@@ -364,11 +371,16 @@ async function send(){
 }
 
 function renderRef(){
-  const root = $('#ref');
-  CATALOG.forEach(g => {
-    const det = h('details', {}, h('summary', {}, `${g.cat.replace(/ \(.*/, '')} · ${g.items.length}`));
+  const root = $('#ref'); root.replaceChildren();
+  const acts = CATALOG.filter(g => !GENERAL.has(g.cat));
+  const sel = h('select', {style:'margin-bottom:8px', onchange:e => { S.act = e.target.value; saveS(); renderRef(); }},
+    h('option', {value:''}, 'النشاط: الكل'), acts.map(g => h('option', {value:g.cat, ...(S.act === g.cat ? {selected:true} : {})}, g.cat.replace(/ \(.*/, ''))));
+  root.append(sel);
+  CATALOG.filter(g => GENERAL.has(g.cat) || !S.act || g.cat === S.act).forEach(g => {
+    const det = h('details', {}, h('summary', {}, `${GENERAL.has(g.cat) ? 'عام · ' : ''}${g.cat.replace(/ \(.*/, '')} · ${g.items.length}`));
     g.items.forEach(it => det.append(h('button', {type:'button', class:'gear', style:'display:block;width:100%;text-align:left;direction:ltr;margin:4px 0', onclick:() => {
-      const el = $('#src'); el.value = el.value.replace(/\s*$/, '') + '\n' + it.id; el.dispatchEvent(new Event('input'));
+      const el = $('#src'); el.value = el.value.replace(/\s*$/, '') + '
+' + it.id; el.dispatchEvent(new Event('input'));
     }}, `${it.id}  ${it.t}  (${it.type === 'count' ? 'count' : 'safe/unsafe'})`)));
     root.append(det);
   });
